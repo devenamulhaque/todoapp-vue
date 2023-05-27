@@ -24,6 +24,8 @@
         </form>
         <div class="mb-3">
             <button class="bg-red-600 px-4 py-2 rounded text-white mr-2 mb-2" @click="deleteCompletedTasks" v-if="completedTask.length">Clear Completed Tasks</button>
+            <button class="bg-yellow-600 px-4 py-2 rounded text-white mr-2 mb-2" @click="selectAllTask" v-if="inProgressTask.length">Select All Task</button>
+            <button class="bg-gray-600 px-4 py-2 rounded text-white mr-2 mb-2" @click="resetTask" v-if="todos.length">Reset Tasks</button>
         </div>
         <div class="mb-8 border px-4 py-6" v-if="inProgressTask.length">
             <h2 class="text-xl font-medium mb-3">Inprogress list - ({{inProgressTask.length}})</h2>
@@ -100,6 +102,14 @@
                 deleteCompletedTasks(){
                     const deleteCompletedTasks = this.todos.filter(task => !task.completed)
                     this.todos = deleteCompletedTasks
+                },
+                selectAllTask() {
+                    this.todos.forEach(todo => {
+                        todo.completed = true;
+                    });
+                },
+                resetTask() {
+                    this.todos = [];
                 }
             },
             computed: {
