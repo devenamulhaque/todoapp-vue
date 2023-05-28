@@ -17,99 +17,15 @@
 <body>
 
     <div id="app" class="py-6">
-        <h1 class="text-3xl font-bold mb-10">My Todo App</h1>
-        <form @submit.prevent="addNewTask" class="mb-8 flex w-full">
-            <input v-model="addNew" type="text" placeholder="Add a new task" class="border p-4 flex-grow">
-            <button class="bg-yellow-600 p-4 border border-color-yellow-600 text-white">Add New</button>
-        </form>
-        <div class="mb-3">
-            <button class="bg-red-600 px-4 py-2 rounded text-white mr-2 mb-2" @click="deleteCompletedTasks" v-if="completedTask.length">Clear Completed Tasks</button>
-        </div>
-        <div class="mb-8 border px-4 py-6" v-if="inProgressTask.length">
-            <h2 class="text-xl font-medium mb-3">Inprogress list - ({{inProgressTask.length}})</h2>
-            <ul>
-                <li class="flex" v-for="(todo, index) in inProgressTask" :key="todo.id">
-                    <label class="flex-grow">
-                        <input class="mr-2" type="checkbox" v-model="todo.completed">{{todo.name}}
-                    </label>
-                    <div @click="deleteTask(todo)" class="text-red-700 cursor-pointer">
-                        <svg class="w-[16px] h-[16px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="mb-8 px-4 py-6 border" v-if="completedTask.length">
-            <h2 class="text-xl font-medium mb-3">Completed list - ({{completedTask.length}})</h2>
-            <ul>
-                <li class="flex" v-for="(todo, index) in completedTask" :key="todo.id">
-                    <label class="flex-grow">
-                        <input class="mr-2" type="checkbox" v-model="todo.completed"><del>{{todo.name}}</del>
-                    </label>
-                    <div @click="deleteTask(todo)" class="text-red-700 cursor-pointer">
-                        <svg class="w-[16px] h-[16px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        <Todos></Todos>
     </div>
 
-    <script>
+    <script type="module">
+    import Todos from "./components/Todos.js";
+
 
         Vue.createApp({
-            data(){
-                return {
-                    todos: [
-                        {
-                            id: 100,
-                            name: "this is a single todo",
-                            completed: false
-                        },
-                        {
-                            id: 101,
-                            name: "this is a second todo",
-                            completed: true
-                        },
-                        {
-                            id: 102,
-                            name: "Daily task for me",
-                            completed: false
-                        },
-                        {
-                            id: 103,
-                            name: "Daily task for office",
-                            completed: true
-                        },
-                    ],
-                    addedToBag: 0,
-                    addNew: ''
-                }
-            },
-            methods: {
-                addNewTask(){
-                    return this.todos.push({
-                        id: this.todos.length + 100,
-                        name: this.addNew,
-                        completed: false
-                    }),
-                    this.addNew = ''
-                },
-                deleteTask(index){
-                    const deleteItem = this.todos.indexOf(index)
-                    this.todos.splice(deleteItem, 1)
-                },
-                deleteCompletedTasks(){
-                    const deleteCompletedTasks = this.todos.filter(task => !task.completed)
-                    this.todos = deleteCompletedTasks
-                }
-            },
-            computed: {
-                completedTask(){
-                    return this.todos.filter(item => item.completed)
-                },
-                inProgressTask() {
-                    return this.todos.filter(item => !item.completed)
-                }
-            }
+            components: {Todos}
         }).mount('#app')
 
     </script>
