@@ -13,36 +13,20 @@ export default {
     `,
     data(){
         return {
-            todos: [
-                {
-                    id: 100,
-                    name: "this is a single todo",
-                    completed: false
-                },
-                {
-                    id: 101,
-                    name: "this is a second todo",
-                    completed: true
-                },
-                {
-                    id: 102,
-                    name: "Daily task for me",
-                    completed: false
-                },
-                {
-                    id: 103,
-                    name: "Daily task for office",
-                    completed: true
-                },
-            ],
+            todos: [],
             addedToBag: 0
         }
+    },
+    created () {
+        fetch('https://dummyjson.com/todos').then(response => response.json()).then(data => {
+            this.todos = data.todos
+        })
     },
     methods: {
         addNewTask(addNew){
             return this.todos.push({
                 id: this.todos.length + 100,
-                name: addNew,
+                todo: addNew,
                 completed: false
             })
         },
